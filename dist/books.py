@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup as bs4
 import requests
-from dist.psql import Postgres
+from psql import Postgres
 import time
 # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.35'}
 
@@ -38,7 +38,7 @@ def get(sysnum):
         data["year"] = item[4].text.split("\n")[3][15:-3]
     except:
         data["year"] = 0
-    if data["year"] == "<BR>":
+    if data["year"] == "<BR>" or not data["year"].isdigit():
         data["year"] = 0
     try:
         data["class_no"] = item[6].text.replace('\xa0', ' ').strip()
@@ -62,7 +62,7 @@ def get(sysnum):
     print(data)
     return data
 
-for i in range(101071, 200000):
+for i in range(101268, 200000):
     print(i)
     d = get(i)
     if d:
