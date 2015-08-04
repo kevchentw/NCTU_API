@@ -79,6 +79,7 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
@@ -87,6 +88,10 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
 }
