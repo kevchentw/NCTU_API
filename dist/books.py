@@ -17,8 +17,8 @@ def get(sysnum):
         print(time.time()-t)
         t = time.time()
         print(raw_data.text)
-        print("No Data, Retry in 30s...")
-        time.sleep(30)
+        print("No Data, Retry in 10s...")
+        time.sleep(10)
         return get(sysnum)
     if not item:
         return None
@@ -62,8 +62,9 @@ def get(sysnum):
     print(data)
     return data
 
-for i in range(101268, 200000):
+for i in range(101564, 200000):
     print(i)
+    time.sleep(0.5)
     d = get(i)
     if d:
         p = Postgres()
