@@ -33,13 +33,17 @@ class Postgres:
             d['OnOff'] = True
         else:
             d['OnOff'] = False
-        try:
-            self.cur.execute("INSERT INTO raw (lp, driver_name, speed, update_time, status, lat, lng, color_id, azimuth, created)\
+        print(d)
+        if not d['Lat']:
+            d['Lat'] = 0
+        if not d['Lng']:
+            d['Lng'] = 0
+        self.cur.execute("INSERT INTO raw (lp, driver_name, speed, update_time, status, lat, lng, color_id, azimuth, created)\
                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                              (d['LP'], d['DriverName'], d['Speed'], d['Updatetime'], d['OnOff'], d['Lat'], d['Lng'],
                               d['ColorId'], d['Azimuth'], d['created']))
-        except:
-            print("Unknown Err")
+     #   except:
+     #       print("Unknown Err")
 
     def disconnect(self):
         self.conn.commit()

@@ -1,6 +1,6 @@
 import requests
 from lxml import etree
-from dist.psql import Postgres
+from psql import Postgres
 import time
 
 def get_raw():
@@ -8,15 +8,16 @@ def get_raw():
     root = etree.fromstring(r)
     data = []
     for i in root:
-        data.append(dict(i.items()))
+        item = dict(i.items())
+        data.append(item)
     return data
 
 
 while 1:
     p = Postgres()
-    p.connect()
+    p.connect("bus")
     data = get_raw()
     for d in data:
-        p.add_book(d)
+        p.add_bus_data(d)
     p.disconnect()
     time.sleep(10)
