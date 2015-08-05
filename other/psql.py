@@ -29,8 +29,12 @@ class Postgres:
 
     def add_bus_data(self, d):
         d['created'] = datetime.now().isoformat()
+        if d['OnOff'] == "ON":
+            d['OnOff'] = True
+        else:
+            d['OnOff'] = False
         try:
-            self.cur.execute("INSERT INTO raw (LP, DriverName, Speed, Updatetime, OnOff, Lat, Lng, ColorId, Azimuth, created)\
+            self.cur.execute("INSERT INTO raw (lp, driver_name, speed, update_time, status, lat, lng, color_id, azimuth, created)\
                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
                              (d['LP'], d['DriverName'], d['Speed'], d['Updatetime'], d['OnOff'], d['Lat'], d['Lng'],
                               d['ColorId'], d['Azimuth'], d['created']))
