@@ -1,5 +1,7 @@
 import psycopg2
 from datetime import datetime
+import sys
+
 
 class Postgres:
     def __init__(self):
@@ -10,53 +12,39 @@ class Postgres:
         self.conn = psycopg2.connect(database=db, user="kevchentw", password="", host="140.113.244.244")
         self.cur = self.conn.cursor()
 
-    def get_all(self):
-        self.cur.execute("SELECT * FROM books;")
+    def get_all(self, table):
+        self.cur.execute("SELECT * FROM %s;" % table)
         rows = self.cur.fetchall()
         for row in rows:
             print(row)
 
-    def add_book(self, d):
-        d['created'] = datetime.now().isoformat()
-        d['lastmodified'] = datetime.now().isoformat()
-        try:
-            self.cur.execute("INSERT INTO books (title, author, year, class_no, isbn, amount, created, lastmodified, url_detail, url_holding, format, sysnum)\
-                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                             (d['title'], d['author'], d['year'], d['class_no'], d['isbn'],
-                              d['amount'], d['created'], d['lastmodified'], d['url_detail'], d['url_holding'], d['format'], d['sysnum']))
-        except psycopg2.IntegrityError:
-            print("Book Already Exist")
+    def delete_all(self, table):
+        self.cur.execute("DELETE FROM %s;" % table)
 
-    def add_bus_data(self, d):
-        d['created'] = datetime.now().isoformat()
-        if d['OnOff'] == "ON":
-            d['OnOff'] = True
-        else:
-            d['OnOff'] = False
-        print(d)
-        if not d['Lat']:
-            d['Lat'] = 0
-        if not d['Lng']:
-            d['Lng'] = 0
-        self.cur.execute("INSERT INTO raw (lp, driver_name, speed, update_time, status, lat, lng, color_id, azimuth, created)\
-                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                             (d['LP'], d['DriverName'], d['Speed'], d['Updatetime'], d['OnOff'], d['Lat'], d['Lng'],
-                              d['ColorId'], d['Azimuth'], d['created']))
-     #   except:
-     #       print("Unknown Err")
+    def execute(self, sql):
+        err = None
+        try:
+            self.cur.execute(sql)
+        except:
+            err = str(sys.exc_info()[0])
+            print("psql err: " + err)
+        return err
+
+    def create_insert_sql(self, d, table):
+        k = ""
+        v = ""
+        for key in d.keys():
+            k += str(key).lower() + ", "
+            v += "'" + str(d[key]) + "'" + ", "
+        k = k[:-2]
+        v = v[:-2]
+        sql = "INSERT INTO " + table + " (%s) " % k + "VALUES (%s) " % v
+        print(sql)
+        return sql
 
     def disconnect(self):
         self.conn.commit()
         self.cur.close()
         self.conn.close()
 
-
-def test():
-    d = {}
-    p = Postgres()
-    p.connect()
-    p.add_book(d)
-    p.disconnect()
-
-# test()
 

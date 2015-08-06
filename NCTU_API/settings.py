@@ -60,11 +60,15 @@ WSGI_APPLICATION = 'NCTU_API.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'NCTU_API',
+            'USER': 'kevchentw',
+            'PASSWORD': '',
+            'HOST': '140.113.244.244',
+            'PORT': '',
+        }
     }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

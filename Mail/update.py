@@ -38,7 +38,6 @@ def get_data():
             d["type"] = _m[3].string.strip()
             d["dorm"] = DORM_NAME[idx]
             mail_data.append(d)
-    # print(mail_data)
     return mail_data
 
 
