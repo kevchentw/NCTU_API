@@ -11,7 +11,7 @@ class BusStopSerializer(serializers.ModelSerializer):
 class BusScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusSchedule
-        fields = ('id', 'time', 'route', 'stop', 'description_ZH', 'description_EN', 'lat', 'lon')
+        fields = ('id', 'time', 'route', 'stop', 'description_ZH', 'description_EN')
 
 
 class BusRouteSerializer(serializers.ModelSerializer):
