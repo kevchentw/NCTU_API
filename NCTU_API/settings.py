@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_swagger',
     'Mail',
     'Bus',
 )
@@ -99,4 +100,33 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
+}
+
+SWAGGER_SETTINGS = {
+    'exclude_namespaces': [],
+    'api_version': '0.1',
+    'api_path': '/',
+    'enabled_methods': [
+        'get',
+        'post',
+        'put',
+        'patch',
+        'delete'
+    ],
+    'api_key': '',
+    'is_authenticated': False,
+    'is_superuser': False,
+    'permission_denied_handler': None,
+    'resource_access_handler': None,
+    # 'base_path': '140.113.244.244/docs',
+    'info': {
+        # 'contact': 'Kevin Chen',
+        'description': 'This is NCTU OPEN API. '
+                       'We are under development.... ',
+        # 'license': 'Apache 2.0',
+        # 'licenseUrl': 'http://www.apache.org/licenses/LICENSE-2.0.html',
+        # 'termsOfServiceUrl': 'http://helloreverb.com/terms/',
+        'title': 'NCTU OPEN API',
+    },
+    'doc_expansion': 'none',
 }

@@ -34,6 +34,7 @@ class BusSchedule(models.Model):
     time = models.TimeField()
     route = models.ForeignKey('BusRoute', related_name='schedule_route')
     stop = models.ForeignKey('BusStop', related_name='schedule_stop')
+    direction = models.BooleanField(default=True)
     description_ZH = models.TextField(default="")
     description_EN = models.TextField(default="")
     created_at = models.DateTimeField(auto_now_add=True)
