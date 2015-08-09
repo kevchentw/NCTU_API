@@ -2,12 +2,20 @@ from rest_framework import serializers
 from Bus.models import BusStop, BusSchedule, BusRoute, BusProvider
 import django_filters
 
+
 class BusStopSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='bus-stop-detail')
 
     class Meta:
         model = BusStop
-        fields = ('id', 'name_ZH', 'name_EN', 'description_ZH', 'description_EN', 'lat', 'lon', 'url')
+        fields = ('id',
+                  'name_ZH',
+                  'name_EN',
+                  'description_ZH',
+                  'description_EN',
+                  'lat',
+                  'lon',
+                  'url')
 
 
 class BusStopForScheduleSerializer(serializers.ModelSerializer):
@@ -15,19 +23,12 @@ class BusStopForScheduleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BusStop
-        fields = ('name_ZH', 'name_EN', 'url')
-
-
-class BusProviderForRouteSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='bus-provider-detail')
-
-    class Meta:
-        model = BusProvider
-        fields = ('name_ZH', 'name_EN', 'url')
+        fields = ('name_ZH',
+                  'name_EN',
+                  'url')
 
 
 class BusRouteForScheduleSerializer(serializers.ModelSerializer):
-    provider = BusProviderForRouteSerializer(read_only=True)
     url = serializers.HyperlinkedIdentityField(view_name='bus-route-detail')
 
     class Meta:
@@ -46,7 +47,14 @@ class BusScheduleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BusSchedule
-        fields = ('id', 'time', 'route', 'stop', 'direction', 'description_ZH', 'description_EN', 'url')
+        fields = ('id',
+                  'time',
+                  'route',
+                  'stop',
+                  'direction',
+                  'description_ZH',
+                  'description_EN',
+                  'url')
 
 
 class BusProviderSerializer(serializers.ModelSerializer):
@@ -54,11 +62,13 @@ class BusProviderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BusProvider
-        fields = ('id', 'name_ZH', 'name_EN', 'route_provider')
+        fields = ('id',
+                  'name_ZH',
+                  'name_EN',
+                  'route_provider')
 
 
 class BusRouteSerializer(serializers.ModelSerializer):
-    provider = BusProviderForRouteSerializer(read_only=True)
     departure = BusStopSerializer(read_only=True)
     destination = BusStopSerializer(read_only=True)
 

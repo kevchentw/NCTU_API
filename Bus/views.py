@@ -36,7 +36,6 @@ class BusStopDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BusStopSerializer
 
 
-
 # Bus Schedule API
 class BusScheduleList(generics.ListCreateAPIView):
     """
