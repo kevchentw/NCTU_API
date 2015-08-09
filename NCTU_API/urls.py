@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from rest_framework import routers
-import Mail.views
+from Mail.views import *
 from Bus.views import *
 from NCTU_API.views import *
 from django.contrib import admin
@@ -16,8 +16,9 @@ urlpatterns = patterns('',
                        url(r'^bus/schedule/(?P<pk>[0-9]+)/$', BusScheduleDetail.as_view(), name='bus-schedule-detail'),
                        url(r'^bus/provider/$', BusProviderList.as_view(), name='bus-provider-list'),
                        url(r'^bus/provider/(?P<pk>[0-9]+)/$', BusProviderDetail.as_view(), name='bus-provider-detail'),
+                       url(r'^mail/$', MailList.as_view(), name='mail-list'),
+                       url(r'^mail/(?P<pk>[0-9]+)/$', MailDetail.as_view(), name='mail-detail'),
                        url(r'^docs/', include('rest_framework_swagger.urls')),
                        url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-                       url(r'mail', Mail.views.MailList.as_view()),
                        url(r'^admin/', include(admin.site.urls)),
                        )

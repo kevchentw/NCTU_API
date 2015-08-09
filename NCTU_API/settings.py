@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
+    'django_cron',
+#    'django_crontab',
     'Mail',
     'Bus',
 )
@@ -92,6 +94,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+
+#CRONJOBS = [
+#            ('*/5 * * * *', 'NCTU_API.Mail.update.main')
+#            ]
+
+CRON_CLASSES = [
+            "Mail.update.CronJob",
+            ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',

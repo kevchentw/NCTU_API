@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
 from Mail.models import Mail
+from django_cron import CronJobBase, Schedule
+
 
 DORM = ["086", "087", "088", "089", "090", "091", "092", "093", "094", "095", "097"]
 DORM_NAME = ["七舍", "八舍", "九舍", "十舍", "十一舍", "十二舍", "十三舍", "竹軒", "女二舍", "研一舍", "研二舍"]
@@ -47,3 +49,12 @@ def main():
     delete_all_mail()
     insert_mail(get_data())
     print("END")
+
+class CronJob(CronJobBase):
+    RUN_EVERY_MINS = 5
+
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+    code = 'Mail.cron_job'
+
+    def do(self):
+        main()

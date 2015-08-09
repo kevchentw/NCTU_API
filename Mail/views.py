@@ -7,23 +7,60 @@ from rest_framework import filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-class MailFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(name="name__name")
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+class MailList(generics.ListCreateAPIView):
+    """
+    ## Description
 
-    class Meta:
-        model = Mail
-        fields = ('name', 'date', 'mail_id', 'mail_type', 'dorm')
+    > This method returns all the student mail, you can use filter to specify.
+
+    ## Update
+
+    Data will update every 10 minutes.
+    ## GET Parameters
+    ```
+    GET /mail/?search=陳&dorm=十舍&mail_type=平信&format=json
+    ```
+
+    * Search
+        * Parameter: `search`
+        * Description: Search mail by name
+        * Value: Any string
+    * Dorm
+        * Parameter: `dorm`
+        * Description: Select from specific dorm
+        * Value
+            * `九舍`
+            * `十舍`
+            * ...
+    * Mail Type
+        * Parameter: `mail_type`
+        * Description: Availability in vacation days
+        * Value
+            * `普掛`
+            * `平信`
+            * ...
+    * Format
+        * Parameter: `format `
+        * Description: Return format
+        * Value
+            * `api`: web interface
+            * `json`: json
 
 
-class MailList(generics.ListAPIView):
+    ## Sources
+    - http://mailsys.nctu.edu.tw/MailNotify/
+
+    """
+    queryset = Mail.objects.all()
+    serializer_class = MailSerializer
+    filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter)
+    search_fields = ('name',)
+    filter_fields = ('dorm','mail_type', )
+
+
+class MailDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Mail API
     """
     queryset = Mail.objects.all()
     serializer_class = MailSerializer
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
-    filter_class = MailFilter
-    search_fields = ('name',)
-    ordering_fields = ('date',)
-    ordering = ('-date',)

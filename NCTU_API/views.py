@@ -11,4 +11,6 @@ def nctu_api_root(request, format=None):
     return Response(
         {
             'bus': reverse('bus', request=request, format=format),
+            'mail': reverse('mail-list', request=request, format=format),
         })
+
