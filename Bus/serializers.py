@@ -18,33 +18,9 @@ class BusStopSerializer(serializers.ModelSerializer):
                   'url')
 
 
-class BusStopForScheduleSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='bus-provider-detail')
-
-    class Meta:
-        model = BusStop
-        fields = ('name_ZH',
-                  'name_EN',
-                  'url')
-
-
-class BusRouteForScheduleSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='bus-route-detail')
-
-    class Meta:
-        model = BusRoute
-        fields = ('name_ZH',
-                  'name_EN',
-                  'provider',
-                  'url'
-                  )
-
 
 class BusScheduleSerializer(serializers.ModelSerializer):
-    # route = serializers.StringRelatedField()
-    # stop = serializers.HyperlinkedIdentityField(view_name='bus-provider-detail')
     url = serializers.HyperlinkedIdentityField(view_name='bus-schedule-detail')
-
     class Meta:
         model = BusSchedule
         fields = ('id',
@@ -54,8 +30,31 @@ class BusScheduleSerializer(serializers.ModelSerializer):
                   'direction',
                   'description_ZH',
                   'description_EN',
+                  'semester',
+                  'vacation',
+                  'workday',
+                  'weekend',
                   'url')
 
+
+class BusScheduleSerializerString(serializers.ModelSerializer):
+    route = serializers.StringRelatedField()
+    stop = serializers.StringRelatedField()
+    url = serializers.HyperlinkedIdentityField(view_name='bus-schedule-detail')
+    class Meta:
+        model = BusSchedule
+        fields = ('id',
+                  'time',
+                  'route',
+                  'stop',
+                  'direction',
+                  'description_ZH',
+                  'description_EN',
+                  'semester',
+                  'vacation',
+                  'workday',
+                  'weekend',
+                  'url')
 
 class BusProviderSerializer(serializers.ModelSerializer):
     route_provider = serializers.StringRelatedField(many=True)
@@ -69,8 +68,6 @@ class BusProviderSerializer(serializers.ModelSerializer):
 
 
 class BusRouteSerializer(serializers.ModelSerializer):
-    departure = BusStopSerializer(read_only=True)
-    destination = BusStopSerializer(read_only=True)
 
     class Meta:
         model = BusRoute

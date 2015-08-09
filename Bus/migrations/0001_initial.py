@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BusProvider',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('name_ZH', models.CharField(max_length=50)),
                 ('name_EN', models.CharField(max_length=50)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BusRoute',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('name_ZH', models.CharField(max_length=50)),
                 ('name_EN', models.CharField(max_length=50)),
                 ('description_ZH', models.TextField(default='')),
@@ -35,10 +35,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BusSchedule',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('time', models.TimeField()),
-                ('description_ZH', models.TextField(default='')),
-                ('description_EN', models.TextField(default='')),
+                ('direction', models.BooleanField(default=True)),
+                ('description_ZH', models.TextField(blank=True, default='')),
+                ('description_EN', models.TextField(blank=True, default='')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('route', models.ForeignKey(related_name='schedule_route', to='Bus.BusRoute')),
@@ -47,11 +48,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BusStop',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('name_ZH', models.CharField(max_length=50)),
                 ('name_EN', models.CharField(max_length=50)),
-                ('description_ZH', models.TextField(default='')),
-                ('description_EN', models.TextField(default='')),
+                ('description_ZH', models.TextField(blank=True, default='')),
+                ('description_EN', models.TextField(blank=True, default='')),
                 ('lat', models.FloatField(default=0)),
                 ('lon', models.FloatField(default=0)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
