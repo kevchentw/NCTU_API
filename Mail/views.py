@@ -15,7 +15,8 @@ class MailList(generics.ListCreateAPIView):
 
     ## Update
 
-    Data will update every 10 minutes.
+    Data will update every 5 minutes.
+
     ## GET Parameters
     ```
     GET /mail/?search=陳&dorm=十舍&mail_type=平信&format=json

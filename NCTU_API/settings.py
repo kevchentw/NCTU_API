@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = ')z61$t#ja%&w8+lzbg8z8w@b=(qu9(-m42wepkt)%7%af83r^h'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -38,10 +41,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework.authtoken',
     'django_cron',
-#    'django_crontab',
     'Mail',
     'Bus',
+    'Building',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,10 +98,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
-
-#CRONJOBS = [
-#            ('*/5 * * * *', 'NCTU_API.Mail.update.main')
-#            ]
 
 CRON_CLASSES = [
             "Mail.update.CronJob",

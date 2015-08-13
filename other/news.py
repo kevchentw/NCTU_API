@@ -87,5 +87,5 @@ class News:
 
 n = News(2015, 7, 210)
 # n.print()
-c = Clubs(1)
+c = Clubs(2)
 c.print()
