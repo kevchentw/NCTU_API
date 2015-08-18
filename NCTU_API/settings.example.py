@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')z61$t#ja%&w8+lzbg8z8w@b=(qu9(-m42wepkt)%7%af83r^h'
+SECRET_KEY = ''
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
+    'corsheaders',
     'django_cron',
     'Mail',
     'Bus',
@@ -49,6 +50,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -56,7 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+    )
 
 ROOT_URLCONF = 'NCTU_API.urls'
 
@@ -108,7 +111,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.DjangoModelPermissions',
     ),
 }
 
@@ -140,3 +143,5 @@ SWAGGER_SETTINGS = {
     },
     'doc_expansion': 'none',
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
